@@ -15,6 +15,10 @@ export class AuthDataSource implements IAuthDataSource {
     return this.repo.findOne({ where: { email, isDeleted: false } });
   }
 
+  async findById(id: string): Promise<UserEntity | null> {
+    return this.repo.findOne({ where: { id, isDeleted: false } });
+  }
+
   async findByUsername(username: string): Promise<UserEntity | null> {
     return this.repo.findOne({ where: { username, isDeleted: false } });
   }

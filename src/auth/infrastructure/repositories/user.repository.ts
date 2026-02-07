@@ -19,6 +19,11 @@ export class AuthRepository implements IAuthRepository {
     return entity ? UserMapper.toDomain(entity) : null;
   }
 
+  async findById(id: string): Promise<User | null> {
+    const entity = await this.dataSource.findById(id);
+    return entity ? UserMapper.toDomain(entity) : null;
+  }
+
   async findByUsername(username: string): Promise<User | null> {
     const entity = await this.dataSource.findByUsername(username);
     return entity ? UserMapper.toDomain(entity) : null;

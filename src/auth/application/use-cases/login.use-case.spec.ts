@@ -53,7 +53,6 @@ describe('LoginUseCase', () => {
 
   describe('execute', () => {
     it('debería retornar tokens si las credenciales son válidas', async () => {
-
       const mockUser = new User(
         'user-123',
         'jdoe',
@@ -86,7 +85,7 @@ describe('LoginUseCase', () => {
         expirationToken: 3600,
         expirationRefreshToken: 604800,
       });
-      
+
       expect(authRepository.updateRefreshToken).toHaveBeenCalledWith(
         'user-123',
         'new_hashed_rt',

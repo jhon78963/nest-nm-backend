@@ -15,14 +15,31 @@ import { AuthDataSource } from './infrastructure/datasource/typeorm/auth.datasou
 import { AuthRepository } from './infrastructure/repositories/user.repository';
 import { AuthSeeder } from './infrastructure/seeds/auth.seeder';
 import { RegisterUseCase } from './application/use-cases/register.use-case';
+import { AuthManager } from './application/services/auth-manager';
+import { LogoutUseCase } from './application/use-cases/logout.use-case';
+import { RefreshTokenUseCase } from './application/use-cases/refresh-token.use-case';
+import { RefreshTokenStrategy } from './infrastructure/strategies/refresh-token.strategy';
+import { JwtStrategy } from './infrastructure/strategies/jwt.strategy';
+import { PassportModule } from '@nestjs/passport';
+import { GetProfileUseCase } from './application/use-cases/get-profile.use-case';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserEntity]), JwtModule.register({})],
+  imports: [
+    TypeOrmModule.forFeature([UserEntity]),
+    PassportModule.register({ defaultStrategy: 'jwt' }),
+    JwtModule.register({}),
+  ],
   controllers: [AuthController],
   providers: [
+    GetProfileUseCase,
     LoginUseCase,
     RegisterUseCase,
+    LogoutUseCase,
+    RefreshTokenUseCase,
     AuthSeeder,
+    AuthManager,
+    JwtStrategy,
+    RefreshTokenStrategy,
     {
       provide: IAuthDataSource,
       useClass: AuthDataSource,
@@ -32,6 +49,15 @@ import { RegisterUseCase } from './application/use-cases/register.use-case';
       useClass: AuthRepository,
     },
   ],
-  exports: [LoginUseCase, RegisterUseCase],
+  exports: [
+    GetProfileUseCase,
+    LoginUseCase,
+    RegisterUseCase,
+    LogoutUseCase,
+    RefreshTokenUseCase,
+    AuthManager,
+    JwtStrategy,
+    RefreshTokenStrategy,
+  ],
 })
 export class AuthModule {}

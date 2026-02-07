@@ -1,25 +1,25 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { IAuthRepository } from 'src/auth/domain/repositories/auth.repository';
-import { LoginDto } from '../dtos/login.dto';
+import { IAuthRepository } from '../../domain/repositories/auth.repository';
 import { AuthResponseDto } from '../dtos/auth-response.dto';
 import { AuthManager } from '../services/auth-manager';
 
 @Injectable()
-export class LoginUseCase {
+export class RefreshTokenUseCase {
   constructor(
     private readonly authRepository: IAuthRepository,
     private readonly authManager: AuthManager,
   ) {}
 
-  async execute(dto: LoginDto): Promise<AuthResponseDto> {
-    const user = await this.authRepository.findByUsernameOrEmail(
-      dto.identifier,
-    );
-    if (!user) throw new ForbiddenException('Access denied');
+  async execute(
+    userId: string,
+    refreshToken: string,
+  ): Promise<AuthResponseDto> {
+    const user = await this.authRepository.findById(userId);
+    if (!user || !user.hashedRt) throw new ForbiddenException('Access denied');
 
-    const isMatch = await this.authManager.verifyCredentials(
-      dto.password,
-      user.password,
+    const isMatch = await this.authManager.verifyRefreshToken(
+      refreshToken,
+      user.hashedRt,
     );
     if (!isMatch) throw new ForbiddenException('Access denied');
 
