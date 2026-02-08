@@ -40,25 +40,6 @@ export class ColorController {
     private readonly updateColorUseCase: UpdateColorUseCase,
   ) {}
 
-  @Post()
-  @HttpCode(HttpStatus.CREATED)
-  @ApiResponse({ status: 201, type: Color })
-  @ApiOperation({
-    summary: 'Registrar nuevo color',
-  })
-  async create(@Body() dto: CreateColorDto): Promise<Color> {
-    return await this.createColorUseCase.execute(dto);
-  }
-
-  @Delete(':id')
-  @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Eliminar un color' })
-  @ApiResponse({ status: 200, description: 'Color eliminado exitosamente.' })
-  @ApiResponse({ status: 404, description: 'Color no encontrado.' })
-  async delete(@Param('id', ParseUUIDPipe) id: string): Promise<void> {
-    await this.deleteColorUseCase.execute(id);
-  }
-
   @Get()
   @HttpCode(HttpStatus.OK)
   @ApiResponse({ status: 200, type: [Color] })
@@ -76,6 +57,16 @@ export class ColorController {
     return await this.getColorUseCase.execute(id);
   }
 
+  @Post()
+  @HttpCode(HttpStatus.CREATED)
+  @ApiResponse({ status: 201, type: Color })
+  @ApiOperation({
+    summary: 'Registrar nuevo color',
+  })
+  async create(@Body() dto: CreateColorDto): Promise<Color> {
+    return await this.createColorUseCase.execute(dto);
+  }
+
   @Patch(':id')
   @ApiOperation({ summary: 'Actualizar un color parcialmente' })
   @ApiResponse({ status: 200, description: 'Color actualizado exitosamente.' })
@@ -85,5 +76,14 @@ export class ColorController {
     @Body() updateColorDto: UpdateColorDto,
   ) {
     return this.updateColorUseCase.execute(id, updateColorDto);
+  }
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Eliminar un color' })
+  @ApiResponse({ status: 200, description: 'Color eliminado exitosamente.' })
+  @ApiResponse({ status: 404, description: 'Color no encontrado.' })
+  async delete(@Param('id', ParseUUIDPipe) id: string): Promise<void> {
+    await this.deleteColorUseCase.execute(id);
   }
 }
