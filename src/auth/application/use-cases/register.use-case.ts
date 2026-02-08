@@ -1,14 +1,14 @@
-import { ConflictException, Injectable } from '@nestjs/common';
-import { IAuthRepository } from 'src/auth/domain/repositories/auth.repository';
+import { ConflictException, Inject, Injectable } from '@nestjs/common';
 import { RegisterDto } from '../dtos/register.dto';
 import { User } from 'src/auth/domain/entities/user.entity';
 import { AuthResponseDto } from '../dtos/auth-response.dto';
 import { AuthManager } from '../services/auth-manager';
+import type { IAuthRepository } from 'src/auth/domain/repositories/auth.repository';
 
 @Injectable()
 export class RegisterUseCase {
   constructor(
-    private readonly authRepository: IAuthRepository,
+    @Inject('IAuthRepository') private authRepository: IAuthRepository,
     private readonly authManager: AuthManager,
   ) {}
 

@@ -1,7 +1,7 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { User } from 'src/auth/domain/entities/user.entity';
-import { IAuthRepository } from 'src/auth/domain/repositories/auth.repository';
+import type { IAuthRepository } from 'src/auth/domain/repositories/auth.repository';
 
 @Injectable()
 export class AuthSeeder {
@@ -9,7 +9,7 @@ export class AuthSeeder {
 
   constructor(
     // Inyectamos el Repositorio usando el token abstracto
-    private readonly authRepository: IAuthRepository,
+    @Inject('IAuthRepository') private readonly authRepository: IAuthRepository,
   ) {}
 
   async run() {

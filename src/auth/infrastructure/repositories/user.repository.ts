@@ -1,12 +1,12 @@
-import { Injectable } from '@nestjs/common';
-import { IAuthRepository } from 'src/auth/domain/repositories/auth.repository';
-import { IAuthDataSource } from '../datasource/auth.datasource';
+import { Inject, Injectable } from '@nestjs/common';
 import { User } from 'src/auth/domain/entities/user.entity';
 import { UserMapper } from '../mappers/user.mapper';
+import type { IAuthRepository } from 'src/auth/domain/repositories/auth.repository';
+import type { IAuthDataSource } from '../datasources/auth.datasource';
 
 @Injectable()
 export class AuthRepository implements IAuthRepository {
-  constructor(private readonly dataSource: IAuthDataSource) {}
+  constructor(@Inject('IAuthDataSource') private dataSource: IAuthDataSource) {}
 
   async create(user: User): Promise<User> {
     const userModel = UserMapper.toModel(user);

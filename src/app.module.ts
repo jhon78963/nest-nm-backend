@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
+import { InventoryModule } from './inventory/inventory.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import * as Joi from 'joi';
       }),
     }),
     AuthModule,
+    InventoryModule,
   ],
   controllers: [],
   providers: [],

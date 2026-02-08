@@ -41,7 +41,7 @@ export class AuthController {
   ) {}
 
   @Post('profile')
-  @UseGuards(JwtAuthGuard) // <--- Solo usuarios logueados
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Obtener perfil del usuario logueado' })
   @ApiResponse({ status: 200, type: ProfileResponseDto })

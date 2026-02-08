@@ -14,6 +14,12 @@ import { WarehouseModule } from './warehouse/warehouse.module';
     WarehouseModule,
   ],
   providers: [],
-  exports: [],
+  exports: [
+    ColorModule,
+    GenderModule,
+    ProductModule,
+    SizeModule,
+    WarehouseModule,
+  ],
 })
 export class InventoryModule {}

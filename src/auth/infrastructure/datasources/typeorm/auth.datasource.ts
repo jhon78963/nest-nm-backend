@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { IAuthDataSource } from '../auth.datasource';
 import { UserEntity } from '../../models/user.model';
+import type { IAuthDataSource } from '../auth.datasource';
 
 @Injectable()
 export class AuthDataSource implements IAuthDataSource {

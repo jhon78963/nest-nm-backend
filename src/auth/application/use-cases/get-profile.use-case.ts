@@ -1,10 +1,12 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { IAuthRepository } from '../../domain/repositories/auth.repository';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { ProfileResponseDto } from '../dtos/profile-response.dto';
+import type { IAuthRepository } from '../../domain/repositories/auth.repository';
 
 @Injectable()
 export class GetProfileUseCase {
-  constructor(private readonly authRepository: IAuthRepository) {}
+  constructor(
+    @Inject('IAuthRepository') private authRepository: IAuthRepository,
+  ) {}
 
   async execute(userId: string): Promise<ProfileResponseDto> {
     const user = await this.authRepository.findById(userId);

@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
-import { IAuthRepository } from 'src/auth/domain/repositories/auth.repository';
+import type { IAuthRepository } from 'src/auth/domain/repositories/auth.repository';
 
 export interface AuthTokens {
   token: string;
@@ -17,7 +17,7 @@ export class AuthManager {
   private readonly RT_EXPIRATION = 604800; // 7 días
 
   constructor(
-    private readonly authRepository: IAuthRepository,
+    @Inject('IAuthRepository') private authRepository: IAuthRepository,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
   ) {}

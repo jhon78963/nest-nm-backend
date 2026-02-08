@@ -6,12 +6,8 @@ import { AuthController } from './interfaces/controllers/auth.controller';
 import { LoginUseCase } from './application/use-cases/login.use-case';
 import { UserEntity } from './infrastructure/models/user.model';
 
-// Interfaces (Tokens de Inyección)
-import { IAuthDataSource } from './infrastructure/datasource/auth.datasource';
-import { IAuthRepository } from './domain/repositories/auth.repository';
-
 // Implementaciones
-import { AuthDataSource } from './infrastructure/datasource/typeorm/auth.datasource';
+import { AuthDataSource } from './infrastructure/datasources/typeorm/auth.datasource';
 import { AuthRepository } from './infrastructure/repositories/user.repository';
 import { AuthSeeder } from './infrastructure/seeds/auth.seeder';
 import { RegisterUseCase } from './application/use-cases/register.use-case';
@@ -41,11 +37,11 @@ import { GetProfileUseCase } from './application/use-cases/get-profile.use-case'
     JwtStrategy,
     RefreshTokenStrategy,
     {
-      provide: IAuthDataSource,
+      provide: 'IAuthDataSource',
       useClass: AuthDataSource,
     },
     {
-      provide: IAuthRepository,
+      provide: 'IAuthRepository',
       useClass: AuthRepository,
     },
   ],
