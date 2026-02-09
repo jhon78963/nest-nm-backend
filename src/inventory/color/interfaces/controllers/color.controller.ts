@@ -9,6 +9,7 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
+  Request,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -63,8 +64,12 @@ export class ColorController {
   @ApiOperation({
     summary: 'Registrar nuevo color',
   })
-  async create(@Body() dto: CreateColorDto): Promise<Color> {
-    return await this.createColorUseCase.execute(dto);
+  async create(
+    @Body() dto: CreateColorDto,
+    @Request() req: any,
+  ): Promise<Color> {
+    const userId = req.user.id;
+    return await this.createColorUseCase.execute(dto, userId);
   }
 
   @Patch(':id')
@@ -74,8 +79,10 @@ export class ColorController {
   update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateColorDto: UpdateColorDto,
+    @Request() req: any,
   ) {
-    return this.updateColorUseCase.execute(id, updateColorDto);
+    const userId = req.user.id;
+    return this.updateColorUseCase.execute(id, updateColorDto, userId);
   }
 
   @Delete(':id')
@@ -83,7 +90,11 @@ export class ColorController {
   @ApiOperation({ summary: 'Eliminar un color' })
   @ApiResponse({ status: 200, description: 'Color eliminado exitosamente.' })
   @ApiResponse({ status: 404, description: 'Color no encontrado.' })
-  async delete(@Param('id', ParseUUIDPipe) id: string): Promise<void> {
-    await this.deleteColorUseCase.execute(id);
+  async delete(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Request() req: any,
+  ): Promise<void> {
+    const userId = req.user.id;
+    await this.deleteColorUseCase.execute(id, userId);
   }
 }

@@ -7,12 +7,13 @@ export class DeleteColorUseCase {
     @Inject('IColorRepository') private colorRepository: IColorRepository,
   ) {}
 
-  async execute(id: string) {
-    const existingColor = await this.colorRepository.findById(id);
-    if (!existingColor) {
+  async execute(id: string, userId: string) {
+    const color = await this.colorRepository.findById(id);
+    if (!color) {
       throw new NotFoundException(`Color with id ${id} not found`);
     }
 
+    color.delete(userId);
     await this.colorRepository.delete(id);
   }
 }

@@ -9,12 +9,10 @@ export class CreateColorUseCase {
     @Inject('IColorRepository') private colorRepository: IColorRepository,
   ) {}
 
-  async execute(dto: CreateColorDto): Promise<Color> {
+  async execute(dto: CreateColorDto, userId: string): Promise<Color> {
     const existsName = await this.colorRepository.findByName(dto.name);
     if (existsName) throw new ConflictException('Color name already exists');
-
-    const newColor = new Color('', dto.name, dto.hexCode);
-
+    const newColor = Color.create(dto.name, dto.hexCode, userId);
     return await this.colorRepository.create(newColor);
   }
 }

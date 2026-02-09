@@ -11,13 +11,16 @@ export class ColorDataSource implements IColorDatasource {
     private readonly repo: Repository<ColorEntity>,
   ) {}
 
-  create(color: Partial<ColorEntity>): Promise<ColorEntity> {
+  async create(color: ColorEntity): Promise<ColorEntity> {
     const newColor = this.repo.create(color);
-    return this.repo.save(newColor);
+    return await this.repo.save(newColor);
   }
 
   findAll(): Promise<ColorEntity[]> {
-    return this.repo.find({ where: { isDeleted: false } });
+    return this.repo.find({
+      where: { isDeleted: false },
+      order: { name: 'ASC' },
+    });
   }
 
   findById(id: string): Promise<ColorEntity | null> {
@@ -28,11 +31,11 @@ export class ColorDataSource implements IColorDatasource {
     return this.repo.findOne({ where: { name, isDeleted: false } });
   }
 
-  update(id: string, color: Partial<ColorEntity>): Promise<void> {
-    return this.repo.update(id, color).then(() => undefined);
+  async update(id: string, color: ColorEntity): Promise<void> {
+    await this.repo.update(id, color);
   }
 
-  delete(id: string): Promise<void> {
-    return this.repo.update(id, { isDeleted: true }).then(() => undefined);
+  async delete(id: string): Promise<void> {
+    await this.repo.update(id, { isDeleted: true });
   }
 }

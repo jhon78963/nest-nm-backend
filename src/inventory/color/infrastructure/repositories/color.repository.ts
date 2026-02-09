@@ -10,7 +10,7 @@ export class ColorRepository implements IColorRepository {
     @Inject('IColorDataSource') private dataSource: IColorDatasource,
   ) {}
 
-  async create(color: Partial<Color>): Promise<Color> {
+  async create(color: Color): Promise<Color> {
     const colorModel = ColorMapper.toModel(color);
     const entity = await this.dataSource.create(colorModel);
     return ColorMapper.toDomain(entity);
@@ -33,7 +33,7 @@ export class ColorRepository implements IColorRepository {
     return entity ? ColorMapper.toDomain(entity) : null;
   }
 
-  async update(id: string, color: Partial<Color>): Promise<void> {
+  async update(id: string, color: Color): Promise<void> {
     const colorModel = ColorMapper.toModel(color);
     await this.dataSource.update(id, colorModel);
   }

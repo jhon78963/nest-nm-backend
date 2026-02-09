@@ -1,14 +1,8 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-  DeleteDateColumn,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { AuditableEntity } from 'src/shared/infrastructure/models/auditable.model';
 
 @Entity('users')
-export class UserEntity {
+export class UserEntity extends AuditableEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -39,33 +33,4 @@ export class UserEntity {
 
   @Column({ type: 'varchar', name: 'hashed_rt', nullable: true })
   hashedRt: string | null;
-
-  @CreateDateColumn({ type: 'timestamp', name: 'creation_time' })
-  creationTime: Date;
-
-  @Column({ type: 'int', name: 'creator_user_id', nullable: true })
-  creatorUserId: string;
-
-  @UpdateDateColumn({
-    type: 'timestamp',
-    name: 'last_modification_time',
-    nullable: true,
-  })
-  lastModificationTime: Date;
-
-  @Column({ type: 'int', name: 'last_modifier_user_id', nullable: true })
-  lastModifierUserId: string;
-
-  @DeleteDateColumn({
-    type: 'timestamp',
-    name: 'deletion_time',
-    nullable: true,
-  })
-  deletionTime: Date;
-
-  @Column({ type: 'int', name: 'deleter_user_id', nullable: true })
-  deleterUserId: string;
-
-  @Column({ type: 'boolean', name: 'is_deleted', default: false })
-  isDeleted: boolean;
 }
