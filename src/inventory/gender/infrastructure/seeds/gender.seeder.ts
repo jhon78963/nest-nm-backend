@@ -18,7 +18,7 @@ export class GenderSeeder {
       { name: 'Ofertas', shortName: 'O' },
     ];
 
-    const systemUserId = '41f4f942-f432-4876-b627-a77d45cf2594';
+    const systemUserId = '46d5ebc9-3602-4113-bd34-ce7debde7cf2';
 
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
