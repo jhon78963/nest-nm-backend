@@ -1,7 +1,7 @@
-import { Injectable, ConflictException, Inject } from '@nestjs/common';
-import { CreateColorDto } from '../dtos/create-color.dto';
+import { ConflictException, Inject, Injectable } from '@nestjs/common';
 import { Color } from '../../domain/entities/color.entity';
 import type { IColorRepository } from '../../domain/repositories/color.repository';
+import { CreateColorDto } from '../dtos/create-color.dto';
 
 @Injectable()
 export class CreateColorUseCase {

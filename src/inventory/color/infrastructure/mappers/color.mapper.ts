@@ -1,6 +1,6 @@
 import { ColorResponseDto } from '../../application/dtos/color-response.dto';
 import { Color } from '../../domain/entities/color.entity';
-import { ColorEntity } from '../models/color.model'; // Tu entidad TypeORM
+import { ColorEntity } from '../models/color.model';
 
 export class ColorMapper {
   // De la Base de Datos -> Al Dominio

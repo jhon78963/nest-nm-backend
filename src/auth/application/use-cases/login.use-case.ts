@@ -1,8 +1,8 @@
 import { ForbiddenException, Inject, Injectable } from '@nestjs/common';
-import { LoginDto } from '../dtos/login.dto';
-import { AuthResponseDto } from '../dtos/auth-response.dto';
-import { AuthManager } from '../services/auth-manager';
 import type { IAuthRepository } from 'src/auth/domain/repositories/auth.repository';
+import { AuthResponseDto } from '../dtos/auth-response.dto';
+import { LoginDto } from '../dtos/login.dto';
+import { AuthManager } from '../services/auth-manager';
 
 @Injectable()
 export class LoginUseCase {

@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { Color } from '../../domain/entities/color.entity';
 import type { IColorRepository } from '../../domain/repositories/color.repository';
 import type { IColorDatasource } from '../datasources/color.datasource';
-import { Color } from '../../domain/entities/color.entity';
 import { ColorMapper } from '../mappers/color.mapper';
 
 @Injectable()
@@ -23,6 +23,7 @@ export class ColorRepository implements IColorRepository {
         entities.map((entity) => ColorMapper.toDomain(entity)),
       );
   }
+
   async findById(id: string): Promise<Color | null> {
     const entity = await this.dataSource.findById(id);
     return entity ? ColorMapper.toDomain(entity) : null;

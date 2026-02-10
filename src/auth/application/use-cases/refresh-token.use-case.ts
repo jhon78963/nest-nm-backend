@@ -1,7 +1,7 @@
 import { ForbiddenException, Inject, Injectable } from '@nestjs/common';
+import type { IAuthRepository } from '../../domain/repositories/auth.repository';
 import { AuthResponseDto } from '../dtos/auth-response.dto';
 import { AuthManager } from '../services/auth-manager';
-import type { IAuthRepository } from '../../domain/repositories/auth.repository';
 
 @Injectable()
 export class RefreshTokenUseCase {

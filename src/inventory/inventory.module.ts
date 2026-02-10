@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { ProductModule } from './product/product.module';
 import { ColorModule } from './color/color.module';
-import { SizeModule } from './size/size.module';
 import { GenderModule } from './gender/gender.module';
+import { ProductModule } from './product/product.module';
+import { SizeModule } from './size/size.module';
 import { WarehouseModule } from './warehouse/warehouse.module';
 
 @Module({

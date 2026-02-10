@@ -1,6 +1,6 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { ProfileResponseDto } from '../dtos/profile-response.dto';
 import type { IAuthRepository } from '../../domain/repositories/auth.repository';
+import { ProfileResponseDto } from '../dtos/profile-response.dto';
 
 @Injectable()
 export class GetProfileUseCase {

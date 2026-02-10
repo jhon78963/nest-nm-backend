@@ -1,7 +1,9 @@
+import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { AuthSeeder } from './auth/infrastructure/seeds/auth.seeder';
-import { Logger } from '@nestjs/common';
+import { ColorSeeder } from './inventory/color/infrastructure/seeds/color.seeder';
+import { GenderSeeder } from './inventory/gender/infrastructure/seeds/gender.seeder';
 
 async function bootstrap() {
   const app = await NestFactory.createApplicationContext(AppModule);
@@ -12,14 +14,16 @@ async function bootstrap() {
     await authSeeder.run();
 
     // Aquí agregarías otros seeders:
-    // const productSeeder = app.get(ProductSeeder);
-    // await productSeeder.run();
+    const genderSeeder = app.get(GenderSeeder);
+    await genderSeeder.run();
+
+    const colorSeeder = app.get(ColorSeeder);
+    await colorSeeder.run();
 
     logger.log('✨ Todo el seeding terminó correctamente.');
   } catch (error) {
     logger.error('❌ Error durante el seeding:', error);
   } finally {
-    // 4. Cerramos la app
     await app.close();
   }
 }

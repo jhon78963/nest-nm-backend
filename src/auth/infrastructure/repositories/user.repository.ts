@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { User } from 'src/auth/domain/entities/user.entity';
-import { UserMapper } from '../mappers/user.mapper';
 import type { IAuthRepository } from 'src/auth/domain/repositories/auth.repository';
 import type { IAuthDataSource } from '../datasources/auth.datasource';
+import { UserMapper } from '../mappers/user.mapper';
 
 @Injectable()
 export class AuthRepository implements IAuthRepository {

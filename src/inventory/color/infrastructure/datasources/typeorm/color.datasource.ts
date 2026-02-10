@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { IColorDatasource } from '../color.datasource';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ColorEntity } from '../../models/color.model';
 import { Repository } from 'typeorm';
+import { ColorEntity } from '../../models/color.model';
+import type { IColorDatasource } from '../color.datasource';
 
 @Injectable()
 export class ColorDataSource implements IColorDatasource {

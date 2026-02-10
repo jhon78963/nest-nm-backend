@@ -1,5 +1,5 @@
-import { IsString, IsNotEmpty, IsHexColor } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { IsHexColor, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateColorDto {
   @ApiProperty({ example: 'Azul Noche' })

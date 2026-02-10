@@ -1,6 +1,6 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import type { IColorRepository } from '../../domain/repositories/color.repository';
 import { Color } from '../../domain/entities/color.entity';
+import type { IColorRepository } from '../../domain/repositories/color.repository';
 
 @Injectable()
 export class GetColorUseCase {

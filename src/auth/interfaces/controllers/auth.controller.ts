@@ -14,15 +14,15 @@ import {
 } from '@nestjs/swagger';
 
 import { GetProfileUseCase } from 'src/auth/application/use-cases/get-profile.use-case';
-import { LoginUseCase } from '../../application/use-cases/login.use-case';
 import { LogoutUseCase } from 'src/auth/application/use-cases/logout.use-case';
 import { RefreshTokenUseCase } from 'src/auth/application/use-cases/refresh-token.use-case';
 import { RegisterUseCase } from 'src/auth/application/use-cases/register.use-case';
+import { LoginUseCase } from '../../application/use-cases/login.use-case';
 
-import { LoginDto } from '../../application/dtos/login.dto';
+import { ProfileResponseDto } from 'src/auth/application/dtos/profile-response.dto';
 import { RegisterDto } from 'src/auth/application/dtos/register.dto';
 import { AuthResponseDto } from '../../application/dtos/auth-response.dto';
-import { ProfileResponseDto } from 'src/auth/application/dtos/profile-response.dto';
+import { LoginDto } from '../../application/dtos/login.dto';
 
 import { GetCurrentUser } from '../decorators/get-current-user.decorator';
 
