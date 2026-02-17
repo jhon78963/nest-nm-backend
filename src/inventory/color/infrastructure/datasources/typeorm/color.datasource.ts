@@ -16,11 +16,17 @@ export class ColorDataSource implements IColorDatasource {
     return await this.repo.save(newColor);
   }
 
-  findAll(): Promise<ColorEntity[]> {
-    return this.repo.find({
+  // En tu DataSource
+  async findAll(skip: number, limit: number): Promise<{ data: ColorEntity[]; total: number }> {
+    // findAndCount devuelve un arreglo: [0] son los datos, [1] es el total
+    const [data, total] = await this.repo.findAndCount({
       where: { isDeleted: false },
       order: { name: 'ASC' },
+      take: limit, // En TypeORM 'limit' se llama 'take'
+      skip: skip,  // En TypeORM 'offset' se llama 'skip'
     });
+
+    return { data, total };
   }
 
   findById(id: string): Promise<ColorEntity | null> {

@@ -9,6 +9,7 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
+  Query,
   Request,
   UseGuards,
 } from '@nestjs/common';
@@ -27,6 +28,7 @@ import { GetColorUseCase } from '../../application/use-cases/get-color.use-case'
 import { GetColorsUseCase } from '../../application/use-cases/get-colors.use-case';
 import { UpdateColorUseCase } from '../../application/use-cases/update-color.use-case';
 import { Color } from '../../domain/entities/color.entity';
+import { DEFAULT_LIMIT, DEFAULT_PAGE, PaginatedResult } from 'src/shared/interfaces';
 
 @ApiTags('Inventory - Colors')
 @ApiBearerAuth()
@@ -45,8 +47,13 @@ export class ColorController {
   @HttpCode(HttpStatus.OK)
   @ApiResponse({ status: 200, type: [Color] })
   @ApiOperation({ summary: 'Listar todos los colores' })
-  async findAll(): Promise<Color[]> {
-    return await this.getColorsUseCase.execute();
+  async findAll(
+    @Query('page') page: number = DEFAULT_PAGE,
+    @Query('limit') limit: number = DEFAULT_LIMIT, 
+  ): Promise<PaginatedResult<Color[]>> {
+    const pageNumber = Math.max(1, Number(page));
+    const limitNumber = Math.max(1, Number(limit));
+    return await this.getColorsUseCase.execute({ page: pageNumber, limit: limitNumber });
   }
 
   @Get(':id')

@@ -16,12 +16,13 @@ export class ColorRepository implements IColorRepository {
     return ColorMapper.toDomain(entity);
   }
 
-  async findAll(): Promise<Color[]> {
-    return this.dataSource
-      .findAll()
-      .then((entities) =>
-        entities.map((entity) => ColorMapper.toDomain(entity)),
-      );
+  async findAll(skip: number, limit: number): Promise<{ data: Color[]; total: number }> {
+    const { data, total } = await this.dataSource.findAll(skip, limit);
+    const mappedData = data.map((entity) => ColorMapper.toDomain(entity));
+    return {
+      data: mappedData,
+      total: total,
+    };
   }
 
   async findById(id: string): Promise<Color | null> {
