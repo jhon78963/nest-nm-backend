@@ -14,8 +14,10 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/infrastructure/guards/jwt-auth.guard';
-import { GetGenderUseCase } from '../../application/use-cases/get-gender.use-case';
-import { GetGendersUseCase } from '../../application/use-cases/get-genders.use-case';
+import {
+  GetGendersUseCase,
+  GetGenderUseCase,
+} from '../../application/use-cases';
 import { Gender } from '../../domain/entities/gender.entity';
 
 @ApiTags('Inventory - Genders')

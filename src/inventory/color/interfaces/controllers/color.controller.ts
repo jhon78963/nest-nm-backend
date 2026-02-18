@@ -18,14 +18,17 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
+
 import { JwtAuthGuard } from 'src/auth/infrastructure/guards/jwt-auth.guard';
-import { CreateColorDto } from '../../application/dtos/create-color.dto';
-import { UpdateColorDto } from '../../application/dtos/update-color.dto';
-import { CreateColorUseCase } from '../../application/use-cases/create-color.use-case';
-import { DeleteColorUseCase } from '../../application/use-cases/delete-color.use-case';
-import { GetColorUseCase } from '../../application/use-cases/get-color.use-case';
-import { GetColorsUseCase } from '../../application/use-cases/get-colors.use-case';
-import { UpdateColorUseCase } from '../../application/use-cases/update-color.use-case';
+
+import { CreateColorDto, UpdateColorDto } from '../../application/dtos';
+import {
+  CreateColorUseCase,
+  DeleteColorUseCase,
+  GetColorsUseCase,
+  GetColorUseCase,
+  UpdateColorUseCase,
+} from '../../application/use-cases';
 import { Color } from '../../domain/entities/color.entity';
 
 @ApiTags('Inventory - Colors')

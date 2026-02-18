@@ -1,21 +1,20 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { DataSource } from 'typeorm';
-import { Gender } from '../../domain/entities/gender.entity';
+import { SizeType } from '../../domain/entities';
 
 @Injectable()
-export class GenderSeeder {
-  private readonly logger = new Logger(GenderSeeder.name);
+export class SizeTypeSeeder {
+  private readonly logger = new Logger(SizeTypeSeeder.name);
 
   constructor(private readonly dataSource: DataSource) {}
 
   async run() {
-    this.logger.log('🌱 Iniciando seed de GenderModule...');
+    this.logger.log('🌱 Iniciando seed de SizeTypeModule...');
 
-    const gendersToSeed = [
-      { name: 'Caballeros', shortName: 'M' },
-      { name: 'Damas', shortName: 'F' },
-      { name: 'Niños', shortName: 'N' },
-      { name: 'Ofertas', shortName: 'O' },
+    const sizeTypesToSeed = [
+      { name: 'Adulto letras' },
+      { name: 'Adulto números' },
+      { name: 'Niños' },
     ];
 
     const systemUserId = '46d5ebc9-3602-4113-bd34-ce7debde7cf2';
@@ -25,49 +24,43 @@ export class GenderSeeder {
     await queryRunner.startTransaction();
 
     try {
-      for (const data of gendersToSeed) {
-        const genderDomain = Gender.create(
-          data.name,
-          data.shortName,
-          systemUserId,
-        );
+      for (const data of sizeTypesToSeed) {
+        const sizeTypeDomain = SizeType.create(data.name, systemUserId);
 
         const existing = await queryRunner.query(
-          `SELECT id FROM genders WHERE name = $1 LIMIT 1`,
+          `SELECT id FROM size_types WHERE name = $1 LIMIT 1`,
           [data.name],
         );
 
         if (existing.length > 0) {
-          this.logger.debug(`⚠️  Género ya existe: ${data.name}`);
+          this.logger.debug(`⚠️  Tipo de talla ya existe: ${data.name}`);
           continue;
         }
 
         // Insertar respetando AuditableEntity
         await queryRunner.query(
-          `INSERT INTO genders (
+          `INSERT INTO size_types (
             id, 
             name, 
-            short_name, 
             creation_time, 
             creator_user_id, 
             is_deleted
           ) 
-           VALUES ($1, $2, $3, $4, $5, $6)`,
+           VALUES ($1, $2, $3, $4, $5)`,
           [
-            genderDomain.id,
-            genderDomain.name,
-            genderDomain.shortName,
+            sizeTypeDomain.id,
+            sizeTypeDomain.name,
             new Date(), // creation_time
             systemUserId, // creator_user_id
             false, // is_deleted
           ],
         );
 
-        this.logger.log(`✅ Género insertado: ${data.name}`);
+        this.logger.log(`✅ Tipo de talla insertado: ${data.name}`);
       }
 
       await queryRunner.commitTransaction();
-      this.logger.log('🏁 Seed de GenderModule terminado.');
+      this.logger.log('🏁 Seed de SizeTypeModule terminado.');
     } catch (err) {
       this.logger.error('❌ Error en el seed:', err);
       await queryRunner.rollbackTransaction();

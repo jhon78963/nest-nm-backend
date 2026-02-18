@@ -4,6 +4,7 @@ import { AppModule } from './app.module';
 import { AuthSeeder } from './auth/infrastructure/seeds/auth.seeder';
 import { ColorSeeder } from './inventory/color/infrastructure/seeds/color.seeder';
 import { GenderSeeder } from './inventory/gender/infrastructure/seeds/gender.seeder';
+import { SizeTypeSeeder } from './inventory/size/infrastructure/seeds';
 
 async function bootstrap() {
   const app = await NestFactory.createApplicationContext(AppModule);
@@ -19,6 +20,9 @@ async function bootstrap() {
 
     const colorSeeder = app.get(ColorSeeder);
     await colorSeeder.run();
+
+    const sizeTypeSeeder = app.get(SizeTypeSeeder);
+    await sizeTypeSeeder.run();
 
     logger.log('✨ Todo el seeding terminó correctamente.');
   } catch (error) {

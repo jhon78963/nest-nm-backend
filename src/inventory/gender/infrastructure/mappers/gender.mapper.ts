@@ -24,7 +24,6 @@ export class GenderMapper {
   // Del Dominio -> A la Base de Datos (TypeORM)
   static toModel(domain: Gender): GenderEntity {
     const entity = new GenderEntity();
-
     entity.id = domain.id;
     entity.name = domain.name;
     entity.shortName = domain.shortName;
